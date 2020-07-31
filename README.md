@@ -1,26 +1,36 @@
-<a href="https://www.hardwario.com/"><img src="https://www.hardwario.com/ci/assets/hw-logo.svg" width="200" alt="HARDWARIO Logo" align="right"></a>
+# Firmware for HARDWARIO Lora Soil Sensor
 
-# Firmware Skeleton for HARDWARIO Core Module
+## Description
 
-[![Travis](https://img.shields.io/travis/bigclownlabs/bcf-skeleton/master.svg)](https://travis-ci.org/bigclownlabs/bcf-skeleton)
-[![Release](https://img.shields.io/github/release/bigclownlabs/bcf-skeleton.svg)](https://github.com/bigclownlabs/bcf-skeleton/releases)
-[![License](https://img.shields.io/github/license/bigclownlabs/bcf-skeleton.svg)](https://github.com/bigclownlabs/bcf-skeleton/blob/master/LICENSE)
-[![Twitter](https://img.shields.io/twitter/follow/hardwario_en.svg?style=social&label=Follow)](https://twitter.com/hardwario_en)
+Soil sensor monitoring using Lora. In addition to measuring soil and temperature, it also reports status of magnetic reed sensor, which can be attached to P9 (e. g. to monitor if door to the greenhouse is open).
 
-This repository contains firmware skeleton for [Core Module](https://shop.bigclown.com/core-module).
+Values are sent every 15 minutes over LoRaWAN. Values are the arithmetic mean of the measured values since the last send.
 
-If you want to get more information about Core Module, firmware and how to work with it, please follow this link:
+Measure interval is 5m, the battery is measured during transmission.
 
-**https://developers.hardwario.com/firmware/basic-overview/**
+## Buffer
+big endian
 
-User's application code (business logic) goes into `app/application.c`.
-The default content works as a *Hello World* example.
-When flashed into Core Module, it toggles LED state with each button press.
+| Byte    | Name        | Type   | Multiple | Unit   | Note
+| ------: | ----------- | ------ | -------- | ------ | ---------
+|       0 | HEADER      | uint8  |          |        |
+|       1 | BATTERY     | uint8  | 10       | V      |
+|       2 | DOOR STATUS | bool   |          |        | State of the reed sensor (if attached)
+|  3 -  4 | TEMPERATURE | int16  | 10       | °C     | Temperature on the Core module
+|  5 -  6 | TEMPERATURE | int16  | 10       | °C     | Temperature in the Soil Sensor module
+|  7 -  8 | SOIL RAW    | uint16 |          |        | Raw measurement of the Soil Sensor module
 
-## License
+### Header
 
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT/) - see the [LICENSE](LICENSE) file for details.
+* 0 - boot
+* 1 - update
+* 2 - button click
+* 3 - button hold
+* 4 - door opened
+* 5 - door closed
 
----
+## AT
 
-Made with &#x2764;&nbsp; by [**HARDWARIO s.r.o.**](https://www.hardwario.com/) in the heart of Europe.
+```sh
+picocom -b 115200 --omap crcrlf  --echo /dev/ttyUSB0
+```
