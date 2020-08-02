@@ -27,14 +27,14 @@ function Decoder(bytes, port) {
     if (bytes[1] != 255)
         voltage = bytes[1] / 10.0;
 
-    var doorClosed = bytes[2] == 1 ? true : false;
+    var doorState = bytes[2] == 1 ? "closed" : "open";
     var temperature = ((bytes[3] << 8) | bytes[4]) / 10.0;
 
     var decoded = {
         header: header,
         headerInfo: headerValue,
         voltage: voltage,
-        doorClosed: doorClosed,
+        door: doorState,
         temperature: temperature,
         soilSensors: []
     };

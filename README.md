@@ -15,7 +15,7 @@ big endian
 | ------: | ----------- | ------ | -------- | ------ | ---------
 |       0 | HEADER      | uint8  |          |        |
 |       1 | BATTERY     | uint8  | 10       | V      |
-|       2 | DOOR STATUS | bool   |          |        | State of the reed sensor (if attached)
+|       2 | DOOR STATUS | bool   |          |        | State of the reed sensor (true = closed, false = open)
 |  3 -  4 | TEMPERATURE | int16  | 10       | °C     | Temperature on the Core module
 |  5 -  6 | TEMPERATURE | int16  | 10       | °C     | Temperature in the Soil Sensor module
 |  7 -  8 | SOIL RAW    | uint16 |          |        | Raw measurement of the Soil Sensor module

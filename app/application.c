@@ -2,9 +2,7 @@
 #include <at.h>
 
 #define SEND_DATA_INTERVAL                  (15 * 60 * 1000)
-//#define SEND_DATA_INTERVAL                  ( 1 * 60 * 1000)
 #define MEASURE_INTERVAL                    (5 * 60 * 1000)
-//#define MEASURE_INTERVAL                    (      30 * 1000)
 
 #define MAX_SOIL_SENSORS                    5
 
