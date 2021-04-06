@@ -386,8 +386,8 @@ void application_task(void)
     {
         int16_t temperature_i16 = (int16_t) (temperature_avg * 10.f);
 
-        buffer[3] = temperature_i16 >> 8;
-        buffer[4] = temperature_i16;
+        buffer[3] = (temperature_i16 & 0xFF00) >> 8;
+        buffer[4] = temperature_i16 & 0x00FF;
     }
 
     size_t pos = 5;
@@ -403,8 +403,8 @@ void application_task(void)
         {
             int16_t soil_temperature_i16 = (int16_t) (soil_temperature_avg * 10.f);
 
-            buffer[pos++] = soil_temperature_i16 >> 8;
-            buffer[pos++] = soil_temperature_i16;
+            buffer[pos++] = (soil_temperature_i16 & 0xFF00) >> 8;
+            buffer[pos++] = soil_temperature_i16 & 0x00FF;
         } 
         else
         {

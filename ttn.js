@@ -28,7 +28,7 @@ function Decoder(bytes, port) {
         voltage = bytes[1] / 10.0;
 
     var doorState = bytes[2] == 1 ? "closed" : "open";
-    var temperature = ((bytes[3] << 8) | bytes[4]) / 10.0;
+    var temperature = ((bytes[3] << 8) | (bytes[4] & 0xff)) / 10.0;
 
     var decoded = {
         header: header,
@@ -43,7 +43,7 @@ function Decoder(bytes, port) {
     var pos = 5;
     var sensorsCount = (bytes.length - 5) / 4;
     for (i = 0; i < sensorsCount; i++) {
-        var soilTemperature = ((bytes[pos++] << 8) | bytes[pos++]);
+        var soilTemperature = ((bytes[pos++] << 8) | (bytes[pos++] & 0xff));
         var soilHumidity = ((bytes[pos++] << 8) | bytes[pos++]);
 
         if (soilHumidity == 65535 || soilTemperature == 65535)
